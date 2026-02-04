@@ -35,11 +35,13 @@ def select_status(allow_all=False):
 
     while True:
         choice = input("番号: ")
+        # ステータス選択
         if choice in STATUS_LIST:
             return STATUS_LIST[choice]
+        # ステータス：全件取得
         elif choice == "4" and allow_all:
             return None
-        
+        # タスク追加時のみ全件取得用のNo.4の選択項目を除く
         if choice in STATUS_LIST and choice != "4":
             return STATUS_LIST[choice]
         
@@ -121,7 +123,6 @@ def task_update():
     title = input("タスク名: ")
     content = input("新しい内容: ")
     deadline = input("新しい期限(YYYY-MM-DD): ")
-    #status = input("新しいステータス: ")
     status = select_status()
 
     # タスクの更新
