@@ -60,9 +60,16 @@ def task_list():
         else:
             cur.execute("SELECT * FROM tasks")
 
-        for row in cur.fetchall():
+        rows = cur.fetchall()
+
+        # データ件数無しはメッセージ出力
+        if len(rows) == 0:
+            print("該当するタスクがありません。")
+            return
+
+        # データがある場合は一覧表示
+        for row in rows:
             print(row)
-        conn.close()
 
     except mysql.connector.Error as e:
         print("タスク一覧の取得中にデータベースエラーが発生しました。")
