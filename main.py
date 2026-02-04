@@ -1,4 +1,5 @@
 import mysql.connector
+from datetime import datetime
 
 def get_connection():
     return mysql.connector.connect(
@@ -24,6 +25,16 @@ def show_menu():
     print("3. タスク変更")
     print("4. タスク削除")
     print("5. 終了")
+
+# 日付形式チェック
+def input_deadline():
+    while True:
+        deadline = input("期限(YYYY-MM-DD): ")
+        try:
+            datetime.strptime(deadline, "%Y-%m-%d")
+            return deadline
+        except ValueError:
+            print("日付入力が正しくありません。")
 
 # ステータスは揃えたいので選択式
 def select_status(allow_all=False):
@@ -88,7 +99,7 @@ def task_add():
     title = input("タスク名: ")
     content = input("内容: ")
     assignee = input("担当者: ")
-    deadline = input("期限(YYYY-MM-DD): ")
+    deadline = input_deadline()
     status = select_status()
 
     try:
@@ -129,7 +140,7 @@ def task_update():
     task_id = input("変更するタスクID: ")
     title = input("タスク名: ")
     content = input("新しい内容: ")
-    deadline = input("新しい期限(YYYY-MM-DD): ")
+    deadline = input_deadline()
     status = select_status()
 
     # タスクの更新
